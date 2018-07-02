@@ -32,28 +32,28 @@ def load_data(path,num_classes=4):
         x = image.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = preprocess_input(x)
-        background_images.append(x)
+        background_images.append(x[0])
 
     for f in os.listdir(path_leaf):
         img = image.load_img(path_leaf+'/'+f,target_size=(224,224))
         x = image.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = preprocess_input(x)
-        leaf_images.append(x)
+        leaf_images.append(x[0])
 
     for f in os.listdir(path_flower):
         img = image.load_img(path_flower+'/'+f,target_size=(224,224))
         x = image.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = preprocess_input(x)
-        flower_images.append(x)
+        flower_images.append(x[0])
 
     for f in os.listdir(path_ear):
         img = image.load_img(path_ear+'/'+f,target_size=(224,224))
         x = image.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = preprocess_input(x)
-        ear_images.append(x)
+        ear_images.append(x[0])
 
     background_n = len(background_images)
     leaf_n = len(leaf_images)
@@ -77,3 +77,19 @@ def load_data(path,num_classes=4):
     Y = np_utils.to_categorical(Y, num_classes)
 
     return X,Y
+
+def load_flower_imgs(path,num=5):
+    path_flower = path + '/flower/'
+    flower_images = []
+
+    for f in os.listdir(path_flower):
+        img = image.load_img(path_flower+'/'+f,target_size=(224,224))
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        #x = preprocess_input(x)
+        flower_images.append(x[0])
+
+    flowerX = np.asarray(flower_images)
+    np.random.shuffle(flowerX)
+
+    return flowerX[:num]

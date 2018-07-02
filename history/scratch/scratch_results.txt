@@ -1,0 +1,9 @@
+Final Values after Training: 
+('Training Accuracy: ', 0.83796296296296291)
+('Validation Accuracy: ', 0.41203703703703703)
+('Test Accuracy: ', 0.41935483898435322)
+
+
+('Training Loss: ', 18.955553949615101)
+('Validation Loss: ', 20.896516093501337)
+
