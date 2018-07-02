@@ -1,0 +1,28 @@
+Overview of the process: 
+------------------------
+
+1. First, use only the leaf and flower class in the training dataset.
+2. Look at the Grad CAM results of that model.
+3. Then, train the model with all the four classes. 
+4. Look at its Grad CAM outputs and compare with the previous results and make a report. 
+
+Training Methodology: 
+---------------------
+
+Since we have limited number of training examples, we'll use a pretrained model and fine tune the final layers. 
+
+1. After deciding the architecture, test the untrained model on the train, val, test and full datasets to get a baseline. 
+2. Now, test the model on the train, val, test and full datasets to get another reference line. 
+3. Now, start finetuning the model.
+4. The preprocessing should be same as the one used on the dataset on which the model was pretrained. 
+5. Overfit the model first using a very limited number of training examples. 
+6. Now, add more data and train the model and get the results. 
+7. Try dropout and batch normalization separately and together in order to improve the results. 
+8. Now, try augmenting the data using some common augmentation techniques and see if the model improves its performance. 
+
+Note: 
+-----
+
+1. After training, always plot train loss, val loss vs epochs. At the end of training, print test loss.
+2. Use 5 fold cross validation to fix hyperparameters like learning rate, momentum. Try all this with a simple SGD optimizer. 
+3. Get Grad CAM and Grad CAM++ outputs for every succesfully trained model. 
