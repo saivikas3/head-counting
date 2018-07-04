@@ -144,7 +144,7 @@ def grad_cam(input_model, image, cls, layer_name):
     conv_output = input_model.get_layer(layer_name).output
     grads = K.gradients(y_c, conv_output)[0]
     # Normalize if necessary
-    # grads = normalize(grads)
+    #grads = normalize(grads)
     gradient_function = K.function([input_model.input], [conv_output, grads])
 
     output, grads_val = gradient_function([image])
@@ -274,27 +274,46 @@ def only_gradcam(model, img_path, layer_name='block5_conv3', cls=-1, visualize=T
 
     return gradcam
 
-def compute_gradcam(model, image, layer_name, cls=-1, visualize=True, plot_index=1):
+def compute_gradcam(model, image, layer_name, cls=-1, visualize=True, plot_index=1, num_images=1):
 
-
-    preprocessed_input = preprocess_input(image)
-    preprocessed_input = preprocessed_input.reshape(1,224,224,3)
-    predictions = model.predict(preprocessed_input)
+    image = image.reshape(1,140,140,3)
+    predictions = model.predict(image)
 
     if cls == -1:
         cls = np.argmax(predictions)
 
-    gradcam = grad_cam(model, preprocessed_input, cls, layer_name)
+    gradcam = grad_cam(model, image, cls, layer_name)
 
     if visualize:
         #plt.figure(figsize=(15, 10))
-        plt.subplot(5,6,plot_index)
+        plt.subplot(num_images,4,plot_index)
         #plt.title('GradCAM')
         plt.axis('off')
         #plt.imshow(image[0])
+
         plt.imshow(gradcam, cmap='jet', alpha=0.8)
+        plt.title('Layer: '+layer_name)
+        plt.xlabel('Class '+str(cls))
+
+def gradcam_show(model, image, layer_name, cls=-1):
+    #preprocessed_input = preprocess_input(image)
+    image = image.reshape(1,140,140,3)
+    predictions = model.predict(image)
+
+    if cls == -1:
+        cls = np.argmax(predictions)
+    gradcam = grad_cam(model, image, cls, layer_name)
 
 
+    plt.subplot(121)
+    plt.imshow(image[0])
+
+    plt.axis('off')
+        #plt.imshow(image[0])
+    plt.subplot(122)
+    plt.imshow(gradcam, cmap='jet', alpha=0.8)
+    plt.title('Class '+str(cls))
+    plt.show()
 # ## Computing saliency
 
 # In[32]:

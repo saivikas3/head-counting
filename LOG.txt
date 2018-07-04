@@ -1,3 +1,2 @@
-July 2 11.05AM
-
-First choice, plain old alexnet
+Using only first 3 stages of pretrained resnet and training a classifier on top of it gave good results
+Amazing results even on gradcam bruh!
